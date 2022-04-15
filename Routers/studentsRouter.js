@@ -12,7 +12,7 @@ router.route("/students")
     .get(studentsController.getAllstudents)
     .post(
         [
-            body("id").isInt().withMessage("id should be int"),
+            // body("id").isInt().withMessage("id should be int"),
             body("email").isEmail().withMessage("email is not correct"),
             body("password").isAlphanumeric().isLength({ min: 8, max: 15 }).withMessage("password must between 8 and 15")
         ],

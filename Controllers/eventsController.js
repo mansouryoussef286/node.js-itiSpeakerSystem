@@ -40,6 +40,8 @@ module.exports.addEvent = (request, response, next) => {
         }).catch(error => next(error));
 }
 module.exports.updateEvent = (request, response, next) => {
+    if (request.role != "admin")
+        throw new Error("Not Authorized!");
     checkValidation(request);
     event.updateOne({ _id: request.body.id }, {
             $set: {
@@ -59,6 +61,8 @@ module.exports.updateEvent = (request, response, next) => {
         }).catch(error => next(error));
 }
 module.exports.deleteEvent = (request, response, next) => {
+    if (request.role != "admin")
+        throw new Error("Not Authorized!");
     checkValidation(request);
     event.deleteOne({ _id: request.params.id })
         .then((data) => {

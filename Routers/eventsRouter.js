@@ -7,6 +7,10 @@ const eventsController = require("../Controllers/eventsController")
 //initialize router
 const router = express.Router();
 
+// authorization middle ware || i put it in the main app.js as the whole app have no guests clients
+// const authorizationMW = require("./../middle wares/authorizationMiddleWare");
+// router.use(authorizationMW);s
+
 //assign router's methods
 router.route("/events")
     .get(eventsController.getAllEvents)

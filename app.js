@@ -5,12 +5,12 @@ const body_parser = require("body-parser");
 // use mongoose
 const mongoose = require("mongoose");
 
-
 // get the routers
 const authRouter = require("./Routers/authRouter");
 const eventRouter = require("./Routers/eventsRouter");
 const studentRouter = require("./Routers/studentsRouter");
 const speakerRouter = require("./Routers/speakersRouter");
+const authorizationMW = require("./middle wares/authorizationMiddleWare");
 
 // initiate server and start listening
 let server = express();
@@ -23,7 +23,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/itiSpeakers")
     })
     .catch(() => {
         console.log("DB connection problem");
-    })
+    });
 
 
 // CORS cross domain allow origins
@@ -41,8 +41,10 @@ server.use(body_parser.json());
 server.use(body_parser.urlencoded({ extended: "false" }));
 
 
-// login authentication middle ware
+// login router authentication middle ware
 server.use(authRouter);
+// authorization middle ware
+server.use(authorizationMW);
 // routing middle wares
 server.use(eventRouter);
 server.use(studentRouter);

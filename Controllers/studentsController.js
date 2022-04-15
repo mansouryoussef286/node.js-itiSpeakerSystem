@@ -1,6 +1,7 @@
 // connect to the data base
 const student = require("./../Models/studentModel");
 const checkValidation = require("./../middle wares/checkValidationFn");
+const req = require("express/lib/request");
 
 
 // CRUD operations
@@ -55,6 +56,8 @@ module.exports.addstudent = (request, response, next) => {
 module.exports.updatestudent = (request, response, next) => {
     //no error then add the student
     checkValidation(request);
+    if (request.role != "student")
+        throw new Error("Not Authorized!");
     // check for email uniqueness
     student.findOne({ Email: request.body.email })
         .then((data) => {
